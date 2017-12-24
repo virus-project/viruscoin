@@ -1,0 +1,5 @@
+VirusCoin-qt usr/bin
+share/pixmaps/VirusCoin32.xpm usr/share/pixmaps
+share/pixmaps/VirusCoin80.xpm usr/share/pixmaps
+debian/VirusCoin-qt.desktop usr/share/applications
+debian/VirusCoin-qt.protocol usr/share/kde4/services/

@@ -1,0 +1,2 @@
+debian/bin/viruscoincoind usr/bin
+src/viruscoincoind usr/lib/VirusCoin

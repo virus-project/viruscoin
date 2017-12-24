@@ -1,0 +1,11 @@
+[Unit]
+Description=VirusCoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=VirusCoin
+ExecStart=/opt/VirusCoin/viruscoind
+
+[Install]
+WantedBy=multi-user.target

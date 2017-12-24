@@ -1,0 +1,9 @@
+Building VirusCoin
+
+See doc/readme-qt.rst for instructions on building VirusCoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of VirusCoin.
+
+See doc/build-*.txt for instructions on building viruscoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of VirusCoin.

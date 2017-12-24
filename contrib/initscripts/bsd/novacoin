@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: VirusCoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# VirusCoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable VirusCoin service.
+# VirusCoin_config (path): Set to /usr/local/etc/VirusCoin.conf by default.
+# VirusCoin_user:  The user account VirusCoin daemon runs as. It uses 'root' user by default.
+# VirusCoin_group: The group account VirusCoin daemon runs as. It uses 'wheel' group by default.
+# VirusCoin_datadir (str): Default to "/var/db/VirusCoin". Base data directory.
+
+. /etc/rc.subr
+
+name=VirusCoin
+rcvar=VirusCoin_enable
+
+: ${VirusCoin_enable:=NO}
+: ${VirusCoin_config=/usr/local/etc/VirusCoin.conf}
+: ${VirusCoin_datadir=/var/db/VirusCoin}
+: ${VirusCoin_user="root"}
+: ${VirusCoin_group="wheel"}
+
+required_files=${VirusCoin_config}
+command=/usr/local/bin/viruscoind
+VirusCoin_chdir=${VirusCoin_datadir}
+pidfile="${VirusCoin_datadir}/viruscoind.pid"
+stop_cmd=VirusCoin_stop
+command_args="-conf=${VirusCoin_config} -datadir=${VirusCoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+VirusCoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${VirusCoin_datadir}
+	[ $? -eq 0 ] && chown -R ${VirusCoin_user}:${VirusCoin_group} ${VirusCoin_datadir}
+}
+
+VirusCoin_prestart()
+{
+	if [ ! -d "${VirusCoin_datadir}/." ]; then
+		VirusCoin_create_datadir || return 1
+	fi
+}
+
+VirusCoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+VirusCoin_stop()
+{
+    VirusCoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${VirusCoin_config} -datadir=${VirusCoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

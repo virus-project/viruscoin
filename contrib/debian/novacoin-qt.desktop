@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=VirusCoin
+Comment=VirusCoin P2P Cryptocurrency
+Comment[ru]=VirusCoin, P2P криптовалюта
+Comment[fr]=VirusCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=VirusCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/VirusCoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/VirusCoin80.xpm
+MimeType=x-scheme-handler/VirusCoin;
+Categories=Office;
